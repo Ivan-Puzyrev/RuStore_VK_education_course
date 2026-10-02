@@ -23,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SecondScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.RuStoreVKEducationCourse"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
     </application>
 
 </manifest>
