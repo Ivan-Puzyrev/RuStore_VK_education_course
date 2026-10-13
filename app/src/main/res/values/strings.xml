@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RuStore VK education course</string>
+    <string name="no_way_back">Ни шагу назад</string>
+    <string name="i_am_it">Я есть «%1$s»</string>
 </resources>

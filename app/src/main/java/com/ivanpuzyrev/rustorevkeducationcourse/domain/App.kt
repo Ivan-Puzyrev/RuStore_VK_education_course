@@ -1,7 +1,7 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.domain
 
 data class App(
-    val icon: String,
+    val iconUrl: String,
     val title: String,
     val category: Category,
     val description: String
