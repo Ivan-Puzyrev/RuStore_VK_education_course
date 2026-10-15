@@ -16,7 +16,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,7 +27,7 @@ fun AppListToolBar(
     modifier: Modifier = Modifier,
     currentApp: App? = null,
     action: (@Composable () -> Unit)? = null,
-    onBackClick: () -> Unit
+    onBackTap: () -> Unit
 ) {
     TopAppBar(
         modifier = modifier,
@@ -36,19 +38,18 @@ fun AppListToolBar(
                     modifier = Modifier
                         .size(36.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .clickable(onClick = onBackClick),
+                        .clickable(onClick = onBackTap),
                     model = it.iconUrl,
                     contentDescription = it.title
                 )
             }
-
         },
         navigationIcon = {
-                IconButton(onClick = onBackClick) {
+                IconButton(onClick = onBackTap) {
                     Icon(
                         modifier = Modifier.size(32.dp),
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        contentDescription = stringResource(R.string.back),
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
