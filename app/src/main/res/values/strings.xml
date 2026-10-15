@@ -2,4 +2,22 @@
     <string name="app_name">RuStore VK education course</string>
     <string name="no_way_back">Ни шагу назад</string>
     <string name="i_am_it">Я есть «%1$s»</string>
+    <string name="age">Возраст</string>
+    <string name="size">Размер</string>
+    <string name="install">Установить</string>
+    <string name="screenshots">Скриншоты</string>
+    <string name="app_description">Описание приложения</string>
+    <string name="read_more">Читать подробнее</string>
+    <string name="developer">Разработчик</string>
+    <string name="showcase">Витрина</string>
+    <string name="back">Back</string>
+    <string name="share_button">Share Button</string>
+    <string name="entertainment">Развлечения</string>
+    <string name="communication">Общение</string>
+    <string name="services">Услуги</string>
+    <string name="finance">Финансы</string>
+    <string name="shopping">Покупки</string>
+    <string name="government">Государственные</string>
+    <string name="maps">Карты и навигация</string>
+    <string name="collapse">Свернуть</string>
 </resources>
