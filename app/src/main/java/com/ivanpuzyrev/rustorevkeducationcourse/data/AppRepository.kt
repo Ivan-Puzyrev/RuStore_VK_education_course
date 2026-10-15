@@ -217,12 +217,12 @@ object AppRepository {
             ageLimit = 0,
             size = 282,
             screenshotsUrls = listOf(
-                "https://static.rustore.ru/imgproxy/4xMKiAgeBZhkuPHL5qMh7SYS6jt9xtikStDu74TJaHc/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/25/ac/apk/537791/content/SCREENSHOT/a8b8dd05-fc73-4cbb-8ae5-7d9ea578db2f.png@webp",
-                "https://static.rustore.ru/imgproxy/rQ36DqvDhRwitYfiFSyPiQNKL0oRloJfzEdFhLm7LiI/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/25/0d/apk/537791/content/SCREENSHOT/a22d257d-e361-48f3-b0db-04d42a12e88b.png@webp",
-                "https://static.rustore.ru/imgproxy/sWBLb4Fwcpe0P1n34st2daNH8YL1Ll3_MuYTpVBRLOM/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/25/25/apk/537791/content/SCREENSHOT/eca9e98f-b5ae-4a7e-b28a-85a1d1e3987b.png@webp",
-                "https://static.rustore.ru/imgproxy/zsB66Zcsfi1LD3YA79awXI8-qWCsZIDI6CjXAe7xhxA/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/25/41/apk/537791/content/SCREENSHOT/da47acce-30a0-4c34-9e06-0f8ddb302380.png@webp",
-                "https://static.rustore.ru/imgproxy/KeDLQCMFS2dUVVXBXNqKjp5SOzGrh91kAd_InxiTmdo/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/25/e2/apk/537791/content/SCREENSHOT/fb843364-8a62-4b6d-9fe0-cb218bfd7bea.png@webp",
-                "https://static.rustore.ru/imgproxy/yTev3k-N5yLIUQN1vO4ASLwbyWjgAFoGQf8UAC_fq1k/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/25/e3/apk/537791/content/SCREENSHOT/3ec2aec8-89ad-4590-b12c-f901044692b5.png@webp"
+                "https://static.rustore.ru/imgproxy/JpVseW-lgPlFvEzz8RfY85XtokxZwPKUwJIBEoRAMws/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/15/4b/apk/260799/content/SCREENSHOT/01cdca67-cf61-4c6c-b9ac-9578d14ba35e.jpg@webp",
+                "https://static.rustore.ru/imgproxy/moYBVY8nHIewWUNILyqsMyjMRWsibrRrlxFKTq-_e4Q/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/15/86/apk/260799/content/SCREENSHOT/5b7fdec8-7141-4d3b-9f70-5ab5278dbf61.jpg@webp",
+                "https://static.rustore.ru/imgproxy/zKgm975DrORTlmi084eZYpRQ00-Z3Va35xhnHwiuuAU/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/15/30/apk/260799/content/SCREENSHOT/4323707c-ef9e-48c7-b71f-7cb94f1842c9.jpg@webp",
+                "https://static.rustore.ru/imgproxy/rJu_NXbn4hEaHGBps8oPGzWoG6XwyHxRyOZXo787aok/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/15/1b/apk/260799/content/SCREENSHOT/eb633235-ba6f-4dfb-ac8e-a41c8514b656.jpg@webp",
+                "https://static.rustore.ru/imgproxy/fXGtNOlxvUxmF-5VesyGiinkn29tkmFdxrYofoVWx4k/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/15/f4/apk/260799/content/SCREENSHOT/62aa3edb-7f75-4308-837b-281aa6f4e6d0.jpg@webp",
+                "https://static.rustore.ru/imgproxy/-V_1IyXKeseotDk8u25yxtlZ9cNW1YYUxZcoZ3P3EqM/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/15/5f/apk/260799/content/SCREENSHOT/4d5fd046-6e17-4adf-93a3-8405fb6c0c22.jpg@webp"
             )
         ),
         App(
