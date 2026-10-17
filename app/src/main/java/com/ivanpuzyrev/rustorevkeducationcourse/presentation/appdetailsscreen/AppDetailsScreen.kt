@@ -53,13 +53,9 @@ fun AppDetailsScreen(
     onAppTap: (Int) -> Unit
 ) {
 
-    val viewModel = viewModel<AppDetailsViewModel>()
+    val viewModel = viewModel { AppDetailsViewModel(appId) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(Unit) {
-        viewModel.loadApp(appId)
-    }
 
     ObserveEvents(viewModel.events, snackbarHostState)
 
