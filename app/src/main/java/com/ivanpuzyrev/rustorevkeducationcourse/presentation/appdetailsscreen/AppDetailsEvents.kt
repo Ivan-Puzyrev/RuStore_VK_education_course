@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
 sealed interface AppDetailsEvents {
     data object Error: AppDetailsEvents

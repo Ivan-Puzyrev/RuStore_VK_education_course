@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.applistscreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListImage
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
 
 @Composable

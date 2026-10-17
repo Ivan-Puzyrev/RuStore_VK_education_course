@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
 import androidx.lifecycle.ViewModel
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
@@ -10,23 +10,22 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlin.time.Duration.Companion.seconds
 
-class AppListViewModel : ViewModel() {
+class AppDetailsViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow<AppListState>(AppListState.Loading)
+    private val _state = MutableStateFlow<AppDetailsState>(AppDetailsState.Loading)
     val state = _state.asStateFlow()
 
-    private val _events = Channel<AppListEvent>()
+    private val _events = Channel<AppDetailsEvents>()
     val events = _events.receiveAsFlow()
 
-    suspend fun loadApps() {
+    suspend fun loadApp(appId: Int) {
         delay(1.seconds)
         _state.update {
-            AppListState.Content(AppRepository.getAppList())
+            AppDetailsState.Content(AppRepository.getAppById(appId))
         }
     }
 
     fun clickLogo() {
-        _events.trySend(AppListEvent.LogoClicked)
+        _events.trySend(AppDetailsEvents.LogoClicked)
     }
-
 }

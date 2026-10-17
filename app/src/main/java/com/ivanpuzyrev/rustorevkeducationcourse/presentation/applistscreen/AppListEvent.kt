@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.applistscreen
 
 sealed interface AppListEvent {
     data object Error: AppListEvent

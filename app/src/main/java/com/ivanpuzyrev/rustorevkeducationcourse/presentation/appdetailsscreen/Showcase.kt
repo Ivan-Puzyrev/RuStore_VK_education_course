@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen.AppCard
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.applistscreen.AppCard
 
 @Composable
 fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) -> Unit, onLogoTap: () -> Unit) {

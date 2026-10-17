@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListImage
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
 
 @Composable
 fun Screenshots(modifier: Modifier = Modifier, screenshotsUrls: List<String>) {

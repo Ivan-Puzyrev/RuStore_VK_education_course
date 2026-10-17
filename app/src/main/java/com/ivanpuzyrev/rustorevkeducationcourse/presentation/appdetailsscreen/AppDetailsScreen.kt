@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
 import android.util.Log
 import androidx.compose.foundation.clickable
@@ -39,8 +39,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListImage
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListToolBar
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListToolBar
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest

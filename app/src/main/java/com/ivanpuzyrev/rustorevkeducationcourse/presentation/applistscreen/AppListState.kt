@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.applistscreen
 
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
 

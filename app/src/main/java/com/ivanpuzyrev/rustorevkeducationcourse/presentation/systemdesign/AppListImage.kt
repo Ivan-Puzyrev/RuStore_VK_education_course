@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
