@@ -21,6 +21,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +43,10 @@ import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppLi
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
 
 @Composable
-fun AppScreen(modifier: Modifier = Modifier, app: App, onBackTap: () -> Unit, onAppTap: (Int) -> Unit) {
+fun AppScreen(modifier: Modifier = Modifier, appId: Int, onBackTap: () -> Unit, onAppTap: (Int) -> Unit) {
+
+    val app by remember { mutableStateOf(AppRepository.getAppById(appId)) }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -134,7 +140,7 @@ fun AppScreen(modifier: Modifier = Modifier, app: App, onBackTap: () -> Unit, on
 @Composable
 private fun AppScreenPreview() {
     AppScreen(
-        app = AppRepository.getAppList()[1],
+        appId = 1,
         onBackTap = {},
         onAppTap = {}
     )

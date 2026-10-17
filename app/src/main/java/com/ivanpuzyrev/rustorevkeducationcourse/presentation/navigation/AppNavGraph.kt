@@ -41,9 +41,9 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
 
         composable<AppListDestination.AppScreen> { backStackEntry ->
             val appId = backStackEntry.toRoute<AppListDestination.AppScreen>().appId
-            val app = AppRepository.getAppById(appId)
+
             AppScreen(
-                app = app,
+                appId = appId,
                 onBackTap = {
                     navController.popBackStack()
                 },
