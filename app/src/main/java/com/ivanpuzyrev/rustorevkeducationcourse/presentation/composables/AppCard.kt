@@ -25,9 +25,9 @@ import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppLi
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
 
 @Composable
-fun AppCard(app: App, onCardClick: (Int) -> Unit) {
+fun AppCard(modifier: Modifier = Modifier, app: App, onCardClick: (Int) -> Unit) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(80.dp)
             .clickable(onClick = { onCardClick(app.id) }),
@@ -65,5 +65,5 @@ fun AppCard(app: App, onCardClick: (Int) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun AppCardPreview() {
-    AppCard(AppRepository.getAppList()[0]) {}
+    AppCard(app = AppRepository.getAppList()[0]) {}
 }

@@ -8,6 +8,9 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +21,10 @@ import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
 
 @Composable
 fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) -> Unit) {
+
     val pagerState = rememberPagerState { appList.size / NUMBER_OF_APPS_ON_PAGE }
+    val appsPages by remember { mutableStateOf(appList.chunked(NUMBER_OF_APPS_ON_PAGE)) }
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -27,14 +33,13 @@ fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) 
             text = stringResource(R.string.showcase),
             style = MaterialTheme.typography.headlineMedium
         )
-        HorizontalPager(pagerState) {
-            val apps = appList.slice(it * NUMBER_OF_APPS_ON_PAGE..it * NUMBER_OF_APPS_ON_PAGE + 2)
+        HorizontalPager(pagerState) { pageNumber ->
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                apps.forEach { app ->
-                    AppCard(app) {
+                appsPages[pageNumber].forEach { app ->
+                    AppCard(app = app) {
                         onAppTap(app.id)
                     }
                 }

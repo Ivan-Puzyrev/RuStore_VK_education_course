@@ -11,6 +11,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -22,14 +25,17 @@ import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppLi
 
 @Composable
 fun Screenshots(modifier: Modifier = Modifier, screenshotsUrls: List<String>) {
+
     val pagerState = rememberPagerState { screenshotsUrls.size / NUMBER_OF_SCREENSHOTS_ON_PAGE }
+    val screenshotsPages by remember { mutableStateOf(screenshotsUrls.chunked(NUMBER_OF_SCREENSHOTS_ON_PAGE)) }
+
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(
             text = stringResource(R.string.screenshots),
             style = MaterialTheme.typography.headlineMedium
         )
-        HorizontalPager(pagerState) {
-            val (firstScreenshot, secondScreenshot) = screenshotsUrls.slice(it * 2..it * 2 + 1)
+        HorizontalPager(pagerState) { pageNumber ->
+            val (firstScreenshot, secondScreenshot) = screenshotsPages[pageNumber]
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround

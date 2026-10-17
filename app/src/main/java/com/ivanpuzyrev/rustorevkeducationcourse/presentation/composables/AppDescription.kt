@@ -43,7 +43,6 @@ fun AppDescription(modifier: Modifier = Modifier, description: String) {
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary
         )
-
     }
 }
 

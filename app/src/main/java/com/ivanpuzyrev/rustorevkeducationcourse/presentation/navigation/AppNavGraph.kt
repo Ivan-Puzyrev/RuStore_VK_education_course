@@ -51,6 +51,5 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                     navController.popBackStack()
                 })
         }
-
     }
 }
