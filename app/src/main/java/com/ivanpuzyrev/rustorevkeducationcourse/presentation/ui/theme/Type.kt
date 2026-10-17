@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.ui.theme
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color
