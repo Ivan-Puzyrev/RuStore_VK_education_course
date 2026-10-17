@@ -29,15 +29,11 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
 
         composable<AppListDestination.AppList> {
             AppListScreen(
-                appList = AppRepository.getAppList(),
                 onCardTap = {
                     navController.navigate(AppListDestination.AppScreen(it))
                 },
                 onBackTap = {
                     activity?.finish()
-                },
-                onLogoTap = {
-
                 }
             )
         }

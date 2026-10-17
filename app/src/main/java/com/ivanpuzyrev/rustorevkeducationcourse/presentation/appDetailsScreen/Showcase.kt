@@ -21,7 +21,7 @@ import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen.AppCard
 
 @Composable
-fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) -> Unit) {
+fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) -> Unit, onLogoTap: () -> Unit) {
 
     val pagerState = rememberPagerState { appList.size / NUMBER_OF_APPS_ON_PAGE }
     val appsPages by remember { mutableStateOf(appList.chunked(NUMBER_OF_APPS_ON_PAGE)) }
@@ -45,9 +45,7 @@ fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) 
                         onCardTap = {
                             onAppTap(app.id)
                         },
-                        onLogoTap = {
-
-                        })
+                        onLogoTap = onLogoTap)
                 }
             }
         }
@@ -61,6 +59,7 @@ private const val NUMBER_OF_APPS_ON_PAGE = 3
 private fun ShowcasePreview() {
     Showcase(
         appList = AppRepository.getAppList().take(9),
-        onAppTap = {}
+        onAppTap = {},
+        onLogoTap = {}
     )
 }

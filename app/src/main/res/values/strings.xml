@@ -20,4 +20,6 @@
     <string name="government">Государственные</string>
     <string name="maps">Карты и навигация</string>
     <string name="collapse">Свернуть</string>
+    <string name="error">Error</string>
+    <string name="logo_clicked">Logo clicked</string>
 </resources>

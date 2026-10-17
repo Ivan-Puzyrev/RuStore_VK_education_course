@@ -25,25 +25,13 @@ import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
 @Composable
 fun AppListToolBar(
     modifier: Modifier = Modifier,
-    currentApp: App? = null,
     action: (@Composable () -> Unit)? = null,
     onBackTap: () -> Unit
 ) {
     TopAppBar(
         modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = MaterialTheme.colorScheme.primary),
-        title = {
-            currentApp?.let {
-                AppListImage(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable(onClick = onBackTap),
-                    model = it.iconUrl,
-                    contentDescription = it.title
-                )
-            }
-        },
+        title = { },
         navigationIcon = {
                 IconButton(onClick = onBackTap) {
                     Icon(

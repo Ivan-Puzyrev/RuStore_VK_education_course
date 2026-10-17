@@ -1,47 +1,111 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListToolBar
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AppListScreen(
     modifier: Modifier = Modifier,
-    appList: List<App>,
-    currentApp: App? = null,
     onCardTap: (Int) -> Unit,
-    onLogoTap: () -> Unit,
     onBackTap: () -> Unit
 ) {
+
+    val viewModel = viewModel<AppListViewModel>()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadApps()
+    }
+
+    ObserveEvents(viewModel.events, snackbarHostState)
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             AppListToolBar(
-                currentApp = currentApp,
                 onBackTap = onBackTap
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp)
-        ) {
-            items(items = appList, key = { it.iconUrl }) {
-                AppCard(app = it, onCardTap = onCardTap, onLogoTap = onLogoTap)
+
+        when (val state = state) {
+            is AppListState.Content -> {
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(16.dp)
+                ) {
+                    items(items = state.apps, key = { it.iconUrl }) {
+                        AppCard(
+                            app = it,
+                            onCardTap = onCardTap,
+                            onLogoTap = {
+                                viewModel.clickLogo()
+                            })
+                    }
+                }
+            }
+
+            AppListState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+        }
+
+
+    }
+}
+
+@Composable
+private fun ObserveEvents(
+    events: Flow<AppListEvent>,
+    snackbarHostState: SnackbarHostState,
+) {
+    val error = stringResource(R.string.error)
+    val logoClicked = stringResource(R.string.logo_clicked)
+
+    LaunchedEffect(Unit) {
+        events.collectLatest { event ->
+            when (event) {
+                AppListEvent.Error -> {
+                    snackbarHostState.showSnackbar(error)
+                }
+
+                AppListEvent.LogoClicked -> {
+                    snackbarHostState.showSnackbar(logoClicked)
+                }
             }
         }
     }
@@ -50,5 +114,5 @@ fun AppListScreen(
 @Preview(showBackground = true)
 @Composable
 private fun AppListScreenPreview() {
-    AppListScreen(appList = AppRepository.getAppList(), currentApp = null, onCardTap = {}, onBackTap = {}, onLogoTap = {})
+    AppListScreen(onCardTap = {}, onBackTap = {})
 }
