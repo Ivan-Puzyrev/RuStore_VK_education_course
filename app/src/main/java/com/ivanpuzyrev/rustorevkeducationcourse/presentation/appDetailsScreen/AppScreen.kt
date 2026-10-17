@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -32,18 +32,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables.AppDescription
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables.AppSpec
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables.Developer
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables.Screenshots
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables.Showcase
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListImage
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListToolBar
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
 
 @Composable
-fun AppScreen(modifier: Modifier = Modifier, appId: Int, onBackTap: () -> Unit, onAppTap: (Int) -> Unit) {
+fun AppDetailsScreen(modifier: Modifier = Modifier, appId: Int, onBackTap: () -> Unit, onAppTap: (Int) -> Unit) {
 
     val app by remember { mutableStateOf(AppRepository.getAppById(appId)) }
 
@@ -138,8 +132,8 @@ fun AppScreen(modifier: Modifier = Modifier, appId: Int, onBackTap: () -> Unit, 
 
 @Preview(showBackground = true)
 @Composable
-private fun AppScreenPreview() {
-    AppScreen(
+private fun AppDetailsScreenPreview() {
+    AppDetailsScreen(
         appId = 1,
         onBackTap = {},
         onAppTap = {}

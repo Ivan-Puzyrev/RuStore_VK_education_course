@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen.AppCard
 
 @Composable
 fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) -> Unit) {
@@ -39,9 +40,14 @@ fun Showcase(modifier: Modifier = Modifier, appList: List<App>, onAppTap: (Int) 
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 appsPages[pageNumber].forEach { app ->
-                    AppCard(app = app) {
-                        onAppTap(app.id)
-                    }
+                    AppCard(
+                        app = app,
+                        onCardTap = {
+                            onAppTap(app.id)
+                        },
+                        onLogoTap = {
+
+                        })
                 }
             }
         }

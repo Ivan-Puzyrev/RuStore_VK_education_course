@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,22 +25,26 @@ import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppLi
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
 
 @Composable
-fun AppCard(modifier: Modifier = Modifier, app: App, onCardClick: (Int) -> Unit) {
+fun AppCard(modifier: Modifier = Modifier, app: App, onCardTap: (Int) -> Unit, onLogoTap: () -> Unit) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp)
-            .clickable(onClick = { onCardClick(app.id) }),
+            .height(80.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AppListImage(
-            modifier = Modifier.size(80.dp).clip(RoundedCornerShape(16.dp)),
+            modifier = Modifier
+                .size(80.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .clickable { onLogoTap() },
             model = app.iconUrl,
             contentDescription = app.title
         )
         Spacer(Modifier.width(16.dp))
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onCardTap(app.id) },
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
@@ -65,5 +69,5 @@ fun AppCard(modifier: Modifier = Modifier, app: App, onCardClick: (Int) -> Unit)
 @Preview(showBackground = true)
 @Composable
 private fun AppCardPreview() {
-    AppCard(app = AppRepository.getAppList()[0]) {}
+    AppCard(app = AppRepository.getAppList()[0], onCardTap = {}) {}
 }

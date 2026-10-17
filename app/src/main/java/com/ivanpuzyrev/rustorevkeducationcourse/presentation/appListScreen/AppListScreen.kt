@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables.AppCard
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.system_design.AppListToolBar
 
 @Composable
@@ -22,6 +21,7 @@ fun AppListScreen(
     appList: List<App>,
     currentApp: App? = null,
     onCardTap: (Int) -> Unit,
+    onLogoTap: () -> Unit,
     onBackTap: () -> Unit
 ) {
     Scaffold(
@@ -41,7 +41,7 @@ fun AppListScreen(
             contentPadding = PaddingValues(16.dp)
         ) {
             items(items = appList, key = { it.iconUrl }) {
-                AppCard(app = it, onCardClick = onCardTap)
+                AppCard(app = it, onCardTap = onCardTap, onLogoTap = onLogoTap)
             }
         }
     }
@@ -50,5 +50,5 @@ fun AppListScreen(
 @Preview(showBackground = true)
 @Composable
 private fun AppListScreenPreview() {
-    AppListScreen(appList = AppRepository.getAppList(), currentApp = null, onCardTap = {}, onBackTap = {})
+    AppListScreen(appList = AppRepository.getAppList(), currentApp = null, onCardTap = {}, onBackTap = {}, onLogoTap = {})
 }

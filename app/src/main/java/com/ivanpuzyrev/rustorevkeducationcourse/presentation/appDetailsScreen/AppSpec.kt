@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.composables
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

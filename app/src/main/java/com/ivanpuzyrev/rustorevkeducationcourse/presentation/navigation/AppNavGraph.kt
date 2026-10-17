@@ -10,8 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.AppListScreen
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.AppScreen
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appListScreen.AppListScreen
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appDetailsScreen.AppDetailsScreen
 
 @Composable
 fun AppNavGraph(modifier: Modifier = Modifier) {
@@ -35,6 +35,9 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                 },
                 onBackTap = {
                     activity?.finish()
+                },
+                onLogoTap = {
+
                 }
             )
         }
@@ -42,7 +45,7 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
         composable<AppListDestination.AppScreen> { backStackEntry ->
             val appId = backStackEntry.toRoute<AppListDestination.AppScreen>().appId
 
-            AppScreen(
+            AppDetailsScreen(
                 appId = appId,
                 onBackTap = {
                     navController.popBackStack()
