@@ -1,16 +1,25 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.Category
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
-class AppRepository {
+class AppListApi {
 
-    fun getAppList() = appList
-    fun getAppById(appId: Int) = appList[appId - 1]
-    fun getShowcaseApps() = appList.shuffled().take(9)
+    suspend fun loadAppList(): List<AppDTO> {
+        delay(1.seconds)
+        return appList.toList()
+    }
+    suspend fun loadShowcaseApps(): List<AppDTO> {
+        delay(1.seconds)
+        return appList.shuffled().take(9)
+    }
+    suspend fun loadAppById(appId: Int): AppDTO {
+        delay(1.seconds)
+        return appList[appId - 1]
+    }
 
     private val appList = listOf(
-        App(
+        AppDTO(
             id = 1,
             iconUrl = "https://static.rustore.ru/imgproxy/-fb8TfFrlYjwu7wYCEPuKsm4wWkTLBTx_0_a9GpeKfc/preset:web_app_icon_160/plain/https://static.rustore.ru/apk/2027823295/content/ICON/97486018-5785-424d-9cab-4fe496d27c76.png@webp",
             title = "VK Видео: кино, сериалы, ТВ, мультфильмы и клипы",
@@ -30,7 +39,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/s07-iEDuleCwnodV98yOZ1Nu-Hr1GgLGl_TVRtQkPzk/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/4/15/f7/apk/2027823295/content/SCREENSHOT/576f9603-1e46-42c8-9846-1b46e740d5a2.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 2,
             iconUrl = "https://static.rustore.ru/imgproxy/PTo8g-Giv9VHYo7_Rwxw_1wC07KtDM7eSJgAfMlv53s/preset:web_app_icon_160/plain/https://static.rustore.ru/3f3d7180-6eb9-45ad-8706-f467c6dcf82a@webp",
             title = "ВКонтакте: чаты, видео, музыка",
@@ -51,7 +60,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/ESedwSiuxiArwL8TEs5FWBDpW5vgXOFz_JqqMzu5UBU/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/5/6/0d/apk/317631/content/SCREENSHOT/1ec20e52-671b-47c1-b6ce-29b2ae00e870.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 3,
             iconUrl = "https://static.rustore.ru/imgproxy/7HOcGO9T6TglJ15g7aDv0CiensvQL4TYOQvtE46lR6E/preset:web_app_icon_160/plain/https://static.rustore.ru/2026/1/27/d8/apk/2688703/content/ICON/ea0c42d8-934f-41a6-a3da-89798736f888.png@webp",
             title = "Авито – путешествия, работа, услуги, авто",
@@ -71,7 +80,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/gARgXOXiqSkgDjA1TcnRO1vERuf3qkojeGqBIPBaT6s/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/3/1c/apk/2688703/content/SCREENSHOT/9b12fe94-1d35-4bba-a4d4-1a04d89788ee.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 4,
             iconUrl = "https://static.rustore.ru/imgproxy/qriFjN8OV6VBF4CCbWcxPm7SL0Y0YtMfxTeJSzWZ1Rc/preset:web_app_icon_160/plain/https://static.rustore.ru/apk/462271/content/ICON/f1b3c68a-b734-48ce-b62f-490208d3fa0e.png@webp",
             title = "СберБанк Онлайн",
@@ -89,7 +98,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/es5AAR-q7nzbHBO9nfiwHpejBpE-zZCwOqBy07hslD8/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/10/68/apk/462271/content/SCREENSHOT/dcbeb7aa-6d5c-4af4-ad54-fa6d7ea6e800.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 5,
             iconUrl = "https://static.rustore.ru/imgproxy/qqoP1Cyi4tplnwb8Z_yJ2mnWVhuen4kzin6tQLWsSHY/preset:web_app_icon_160/plain/https://static.rustore.ru/apk/220863/content/ICON/2238e3ca-e3e7-41d0-b037-777ddc637a5b.png@webp",
             title = "Т-Банк: карты, вклады, кредиты",
@@ -109,7 +118,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/2L8DjW3-n9jy_H20HgCuTlP065QdqXShLjRRsWg9YjI/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/9/30/86/apk/220863/content/SCREENSHOT/b4d35726-6ca7-4e88-bbe6-932dbecfcede.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 6,
             iconUrl = "https://static.rustore.ru/imgproxy/lzg_3CHk-oqIqIfBj0KFQ-vhwK6NUJk6qC1r1Lt0fKM/preset:web_app_icon_160/plain/https://static.rustore.ru/2026/3/28/37/apk/404415/content/ICON/577a3521-f7ef-4322-ab3c-c96b9262c562.png@webp",
             title = "ВТБ Онлайн",
@@ -130,7 +139,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/stxF8Gra1DZWJipiLCaQLvcy-ZEpR46PL1zaQoXfJ7Y/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/3/28/cc/apk/404415/content/SCREENSHOT/8a395630-5f48-4da4-9356-d6c316739c77.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 7,
             iconUrl = "https://static.rustore.ru/imgproxy/FjgsClgg0crUVE9DiaueyRVtmQQMrZ7fYyNh88Gedq0/preset:web_app_icon_160/plain/https://static.rustore.ru/afb07f02-5399-4f45-a366-e49a7b3420ad@webp",
             title = "Альфа-Банк",
@@ -142,15 +151,15 @@ class AppRepository {
             ageLimit = 0,
             size = 185,
             screenshotsUrls = listOf(
-                "https://static.rustore.ru/imgproxy/aPkzR8SEc3VDN-FcftT-GGSQc3fc8LpRRdQTsuKPZYM/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/3/28/12/apk/404415/content/SCREENSHOT/a0a1e69a-38c0-4d1a-a131-00ef13185ff6.png@webp",
-                "https://static.rustore.ru/imgproxy/rZGvtrUtwnxhGkoxibFxG2PipN2v_IN55YJeX2RI5dw/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/3/28/53/apk/404415/content/SCREENSHOT/fc38e187-d67b-44fd-8311-df364cb41407.png@webp",
-                "https://static.rustore.ru/imgproxy/g_cb0EoyjClQGws9sKm9iN_huFNqd0PYrnfBidOVQ5E/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/3/28/69/apk/404415/content/SCREENSHOT/e7dd16b6-d853-4268-9a2d-f9d947d96ce8.png@webp",
-                "https://static.rustore.ru/imgproxy/3OyBWXjfjQUD_aUrhBaRKSoET06P4ixhb5HqOTDMljg/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/3/28/e8/apk/404415/content/SCREENSHOT/3ec7ee40-fc0c-4c1f-9e8a-5b75d51c6f84.png@webp",
-                "https://static.rustore.ru/imgproxy/phpkq-_ClUI40luSSUxOtSqt3qd4qwvrvTwjIgaMaVw/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/3/28/ae/apk/404415/content/SCREENSHOT/b72c1efa-470b-4450-8f0e-9b0b00bcb2d5.png@webp",
-                "https://static.rustore.ru/imgproxy/stxF8Gra1DZWJipiLCaQLvcy-ZEpR46PL1zaQoXfJ7Y/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/3/28/cc/apk/404415/content/SCREENSHOT/8a395630-5f48-4da4-9356-d6c316739c77.png@webp"
+                "https://static.rustore.ru/imgproxy/cCWu10l70foFjDCFYx2GqJJfMJeck_QxVqY-_-MLro8/preset:web_scr_prt_384/plain/https://static.rustore.ru/apk/558271/content/SCREENSHOT/d4617777-6a11-4b0e-bc2a-20a59fa8964a.jpg@webp",
+                "https://static.rustore.ru/imgproxy/91E3i-eH98uAxamTQ_WtyWTPOjTlwoNrHf09ftWhM1k/preset:web_scr_prt_384/plain/https://static.rustore.ru/apk/558271/content/SCREENSHOT/6c8610f0-93a7-4029-8359-54fc14d5dbcb.jpg@webp",
+                "https://static.rustore.ru/imgproxy/4MF0jQVpAV_RhWY2-Zlb5qyJL1gtd6vwhK9TE8Fkb4Q/preset:web_scr_prt_384/plain/https://static.rustore.ru/apk/558271/content/SCREENSHOT/71af38fb-4b13-4858-bfc4-a532890adbf4.jpg@webp",
+                "https://static.rustore.ru/imgproxy/4fSk6cJjcJGYa9HdHWEkwxd0yMRqbqYbGhCrHesYvzg/preset:web_scr_prt_384/plain/https://static.rustore.ru/apk/558271/content/SCREENSHOT/cd7b85f8-6005-4b89-992a-fdc01d818991.jpg@webp",
+                "https://static.rustore.ru/imgproxy/OPsszqyVycLH-_EUTBvAdQaZLFyls76MpKhmG9q5IVA/preset:web_scr_prt_384/plain/https://static.rustore.ru/apk/558271/content/SCREENSHOT/130bca2c-a5a1-45b4-9449-006b54bfb9e1.jpg@webp",
+                "https://static.rustore.ru/imgproxy/yHD4IndtO5FiIPiX_z-mYKzD2Zs521syr1OdCNlgYBY/preset:web_scr_prt_384/plain/https://static.rustore.ru/apk/558271/content/SCREENSHOT/7b8359bd-b305-43cc-bfbd-c34491bcb836.jpg@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 8,
             iconUrl = "https://static.rustore.ru/imgproxy/5mxpzJGODrELiruaecHe6JeJ2RKs9c4tbuREgPUoe0g/preset:web_app_icon_160/plain/https://static.rustore.ru/apk/2024529087/content/ICON/b6616286-ea99-40fc-85f8-e36f2b59465a.png@webp",
             title = "Ozon Банк: выгодные покупки",
@@ -170,7 +179,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/qvE7Mt98pYMFFBssiFNzQv-xpYvWfn3tQTKhfollvLU/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/26/d5/apk/2024529087/content/SCREENSHOT/662d1b13-29b1-46f1-a428-6361ecb179c4.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 9,
             iconUrl = "https://static.rustore.ru/imgproxy/M4yIW2hN3Nfg5_WjYdl0VZM6hwPq2-XfM3uuwGJshWI/preset:web_app_icon_160/plain/https://static.rustore.ru/2026/6/30/b6/apk/514239/content/ICON/8a44b15d-a16e-41a4-b926-9088693015ca.png@webp",
             title = "OZON: товары, одежда, билеты",
@@ -190,7 +199,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/PmO0C84ALP7G2CPo3bmXSwzeOvue5U36VZR-l6UfTB4/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/2/8f/apk/514239/content/SCREENSHOT/80d52352-3d2d-4fec-84b7-a37386326f6f.jpg@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 10,
             iconUrl = "https://static.rustore.ru/imgproxy/6N0m3heN9vooK5mQ2eqkSYr32Lux3QSOPiMh14YqM30/preset:web_app_icon_160/plain/https://static.rustore.ru/2026/2/19/d7/apk/537791/content/ICON/b2916730-6a34-4ebe-aedf-df926e807741.png@webp",
             title = "Госуслуги",
@@ -210,7 +219,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/yTev3k-N5yLIUQN1vO4ASLwbyWjgAFoGQf8UAC_fq1k/preset:web_scr_prt_384/plain/https://static.rustore.ru/2025/11/25/e3/apk/537791/content/SCREENSHOT/3ec2aec8-89ad-4590-b12c-f901044692b5.png@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 11,
             iconUrl = "https://static.rustore.ru/imgproxy/OYKFMgpckkNGCd1jKcnHKojgnsMJ09qjfr9TYyjkyx4/preset:web_app_icon_160/plain/https://static.rustore.ru/2026/2/2/1e/apk/260799/content/ICON/8e439c58-11cf-4e0a-a3dc-9596eda08cfd.png@webp",
             title = "2ГИС: навигатор, транспорт, друзья на карте",
@@ -230,7 +239,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/-V_1IyXKeseotDk8u25yxtlZ9cNW1YYUxZcoZ3P3EqM/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/9/15/5f/apk/260799/content/SCREENSHOT/4d5fd046-6e17-4adf-93a3-8405fb6c0c22.jpg@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 12,
             iconUrl = "https://static.rustore.ru/imgproxy/XZTurDFM5sMC9kQZ0HVSEankh6Q9kAtrkWOQ5KUkhoo/preset:web_app_icon_160/plain/https://static.rustore.ru/2025/9/10/6d/apk/994584511/content/ICON/27a78d43-a664-4fe0-a69d-3edc896c8176.png@webp",
             title = "Яндекс Книги",
@@ -248,7 +257,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/J0TKsSNd2ssRqm7Ktmp6HwVED3sH1QddgQs5GZ_KSzE/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/8/20/a1/apk/994584511/content/SCREENSHOT/a3fc62d5-9c98-480e-b261-ef0bd34fdcd0.jpg@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 13,
             iconUrl = "https://static.rustore.ru/imgproxy/7710ZzLRdVSNKrA9-y4LfSwBDDoYj9GHc9k4riI5YZU/preset:web_app_icon_160/plain/https://static.rustore.ru/apk/2844095/content/ICON/ecfab09e-2c74-4d5a-9c75-5f46351e156c.png@webp",
             title = "Литрес: Книги и аудиокниги",
@@ -268,7 +277,7 @@ class AppRepository {
                 "https://static.rustore.ru/imgproxy/xGTEp32tj6aK7zLb0Y-AHcgyho7mdOwmm4p-ysBm_kQ/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/7/8/f1/apk/2844095/content/SCREENSHOT/dbe99ddf-8fe1-4630-bb92-2d2e50898cd1.jpeg@webp"
             )
         ),
-        App(
+        AppDTO(
             id = 14,
             iconUrl = "https://static.rustore.ru/imgproxy/y27V6ORx0W7Ie-4SaHQYqMGAlEgKgUrMktoiNfnOaq8/preset:web_app_icon_160/plain/https://static.rustore.ru/2026/9/11/e2/apk/2063755997/content/ICON/c43430ab-1d75-42c4-929d-bc413b35dcd7.png@webp",
             title = "Netflix",

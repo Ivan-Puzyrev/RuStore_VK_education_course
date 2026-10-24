@@ -2,7 +2,11 @@ package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
+import com.ivanpuzyrev.rustorevkeducationcourse.data.AppListApi
+import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepositoryImpl
+import com.ivanpuzyrev.rustorevkeducationcourse.data.Mapper
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +18,10 @@ import kotlin.time.Duration.Companion.seconds
 
 class AppDetailsViewModel(appId: Int) : ViewModel() {
 
-    private val appRepository = AppRepository()
+    private val appRepository = AppRepositoryImpl(
+        appListApi = AppListApi(),
+        mapper = Mapper()
+    )
 
     private val _state = MutableStateFlow<AppDetailsState>(AppDetailsState.Loading)
     val state = _state.asStateFlow()
@@ -29,11 +36,10 @@ class AppDetailsViewModel(appId: Int) : ViewModel() {
     fun loadApp(appId: Int) {
         viewModelScope.launch {
             _state.update { AppDetailsState.Loading }
-            delay(1.seconds)
             try {
-                val app = appRepository.getAppById(appId)
-                val showCaseApps = appRepository.getShowcaseApps()
-                _state.update { AppDetailsState.Content(app, showCaseApps) }
+                val appDef = async { appRepository.getAppById(appId) }
+                val showCaseAppsDef = async { appRepository.getShowcaseApps() }
+                _state.update { AppDetailsState.Content(appDef.await(), showCaseAppsDef.await()) }
             } catch (_: Exception) {
                 _state.update { AppDetailsState.Error }
             }

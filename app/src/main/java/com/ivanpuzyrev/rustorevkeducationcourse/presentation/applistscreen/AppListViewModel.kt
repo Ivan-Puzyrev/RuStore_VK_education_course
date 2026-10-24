@@ -2,7 +2,9 @@ package com.ivanpuzyrev.rustorevkeducationcourse.presentation.applistscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
+import com.ivanpuzyrev.rustorevkeducationcourse.data.AppListApi
+import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepositoryImpl
+import com.ivanpuzyrev.rustorevkeducationcourse.data.Mapper
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,10 @@ import kotlin.time.Duration.Companion.seconds
 
 class AppListViewModel : ViewModel() {
 
-    private val appRepository = AppRepository()
+    private val appRepository = AppRepositoryImpl(
+        appListApi = AppListApi(),
+        mapper = Mapper()
+    )
 
     private val _state = MutableStateFlow<AppListState>(AppListState.Initial)
     val state = _state.asStateFlow()
@@ -25,7 +30,6 @@ class AppListViewModel : ViewModel() {
     fun loadApps() {
         viewModelScope.launch {
             _state.update { AppListState.Loading }
-            delay(1.seconds)
             try {
                 val apps = appRepository.getAppList()
                 _state.update {
