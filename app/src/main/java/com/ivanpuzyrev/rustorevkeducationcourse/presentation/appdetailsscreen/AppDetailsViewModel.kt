@@ -14,6 +14,8 @@ import kotlin.time.Duration.Companion.seconds
 
 class AppDetailsViewModel(appId: Int) : ViewModel() {
 
+    private val appRepository = AppRepository()
+
     private val _state = MutableStateFlow<AppDetailsState>(AppDetailsState.Loading)
     val state = _state.asStateFlow()
 
@@ -24,11 +26,16 @@ class AppDetailsViewModel(appId: Int) : ViewModel() {
         loadApp(appId)
     }
 
-    private fun loadApp(appId: Int) {
+    fun loadApp(appId: Int) {
         viewModelScope.launch {
+            _state.update { AppDetailsState.Loading }
             delay(1.seconds)
-            _state.update {
-                AppDetailsState.Content(AppRepository.getAppById(appId))
+            try {
+                val app = appRepository.getAppById(appId)
+                val showCaseApps = appRepository.getShowcaseApps()
+                _state.update { AppDetailsState.Content(app, showCaseApps) }
+            } catch (_: Exception) {
+                _state.update { AppDetailsState.Error }
             }
         }
     }

@@ -3,7 +3,7 @@ package com.ivanpuzyrev.rustorevkeducationcourse.data
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.Category
 
-object AppRepository {
+class AppRepository {
     private val appList = listOf(
         App(
             id = 1,
@@ -287,4 +287,5 @@ object AppRepository {
 
     fun getAppList() = appList
     fun getAppById(appId: Int) = appList[appId - 1]
+    fun getShowcaseApps() = appList.shuffled().take(9)
 }

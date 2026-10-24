@@ -22,4 +22,7 @@
     <string name="collapse">Свернуть</string>
     <string name="error">Error</string>
     <string name="logo_clicked">Logo clicked</string>
+    <string name="mb">MB</string>
+    <string name="something_went_wrong">Что-то пошло не так</string>
+    <string name="retry">Попробовать снова</string>
 </resources>

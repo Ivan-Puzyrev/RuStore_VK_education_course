@@ -1,6 +1,5 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,9 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanpuzyrev.rustorevkeducationcourse.R
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepository
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListToolBar
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.ErrorMessage
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -65,9 +64,7 @@ fun AppDetailsScreen(
             AppListToolBar(
                 action = {
                     IconButton(
-                        onClick = {
-                            Log.d("Tap", "Share Button Tapped")
-                        }
+                                onClick = { }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Share,
@@ -127,7 +124,7 @@ fun AppDetailsScreen(
                                     specTitle = stringResource(R.string.age)
                                 )
                                 AppSpec(
-                                    spec = "${state.app.size} MB",
+                                    spec = "${state.app.size} ${stringResource(R.string.mb)}",
                                     specTitle = stringResource(R.string.size)
                                 )
                             }
@@ -137,9 +134,7 @@ fun AppDetailsScreen(
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(8.dp),
-                        onClick = {
-                            Log.d("Tap", "Install Button state.Tapped")
-                        }
+                        onClick = { }
                     ) {
                         Text(
                             modifier = Modifier.padding(4.dp),
@@ -157,14 +152,12 @@ fun AppDetailsScreen(
 
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
 
-                    Developer(developer = state.app.developer) {
-                        Log.d("Tap", "Developer: $it")
-                    }
+                    Developer(developer = state.app.developer)
 
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
 
                     Showcase(
-                        appList = AppRepository.getAppList().take(9),
+                        appList = state.showCaseApps,
                         onAppTap = onAppTap,
                         onLogoTap = {
                             viewModel.clickLogo()
@@ -178,6 +171,13 @@ fun AppDetailsScreen(
                     CircularProgressIndicator()
                 }
             }
+
+            AppDetailsState.Error -> {
+                    ErrorMessage {
+                        viewModel.loadApp(appId)
+                    }
+            }
+            AppDetailsState.Initial -> {}
         }
 
     }

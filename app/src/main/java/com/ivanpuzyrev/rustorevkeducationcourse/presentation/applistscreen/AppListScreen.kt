@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListToolBar
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.ErrorMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
@@ -79,6 +80,13 @@ fun AppListScreen(
                     CircularProgressIndicator()
                 }
             }
+
+            AppListState.Error -> {
+                ErrorMessage {
+                    viewModel.loadApps()
+                }
+            }
+            AppListState.Initial -> {}
         }
 
 
