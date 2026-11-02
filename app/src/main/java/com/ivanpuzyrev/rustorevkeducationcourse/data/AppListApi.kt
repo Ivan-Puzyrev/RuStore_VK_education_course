@@ -1,9 +1,13 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.time.Duration.Companion.seconds
 
-class AppListApi {
+@Singleton
+class AppListApi @Inject constructor() {
 
     suspend fun loadAppList(): List<AppDTO> {
         delay(1.seconds)

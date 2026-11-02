@@ -1,9 +1,12 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
+import javax.inject.Inject
+import javax.inject.Singleton
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.Category as DomainCategory
 
-class Mapper {
+@Singleton
+class Mapper @Inject constructor() {
 
     fun appDTOtoDomainApp(appDTO: AppDTO): App = App(
         id = appDTO.id,

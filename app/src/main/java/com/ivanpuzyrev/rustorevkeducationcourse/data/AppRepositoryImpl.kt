@@ -1,9 +1,11 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class AppRepositoryImpl(
+@Singleton
+class AppRepositoryImpl @Inject constructor (
     private val appListApi: AppListApi,
     private val mapper: Mapper
 ): AppRepository {
