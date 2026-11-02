@@ -33,7 +33,7 @@ class AppDetailsViewModel @AssistedInject constructor(@Assisted appId: Int, val 
             _state.update { AppDetailsState.Loading }
             try {
                 val appDef = async { appRepository.getAppById(appId) }
-                val showCaseAppsDef = async { appRepository.getShowcaseApps() }
+                val showCaseAppsDef = async { appRepository.getShowcaseApps(appId) }
                 _state.update { AppDetailsState.Content(appDef.await(), showCaseAppsDef.await()) }
             } catch (_: Exception) {
                 _state.update { AppDetailsState.Error }

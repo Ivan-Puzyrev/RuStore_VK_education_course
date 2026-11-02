@@ -13,9 +13,9 @@ class AppListApi @Inject constructor() {
         delay(1.seconds)
         return appList.toList()
     }
-    suspend fun loadShowcaseApps(): List<AppDTO> {
+    suspend fun loadShowcaseApps(appId: Int): List<AppDTO> {
         delay(1.seconds)
-        return appList.shuffled().take(9)
+        return appList.shuffled().filter { it.id != appId }.take(9)
     }
     suspend fun loadAppById(appId: Int): AppDTO {
         delay(1.seconds)

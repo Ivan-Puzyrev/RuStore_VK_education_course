@@ -22,6 +22,10 @@ class AppListViewModel @Inject constructor (val appRepository: AppRepository) : 
     private val _events = Channel<AppListEvent>()
     val events = _events.receiveAsFlow()
 
+    init {
+        loadApps()
+    }
+
     fun loadApps() {
         viewModelScope.launch {
             _state.update { AppListState.Loading }

@@ -39,10 +39,6 @@ fun AppListScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(Unit) {
-        viewModel.loadApps()
-    }
-
     ObserveEvents(viewModel.events, snackbarHostState)
 
     Scaffold(

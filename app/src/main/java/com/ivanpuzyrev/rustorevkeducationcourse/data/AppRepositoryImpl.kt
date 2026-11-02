@@ -11,7 +11,7 @@ class AppRepositoryImpl @Inject constructor (
 ): AppRepository {
 
     override suspend fun getAppList() = appListApi.loadAppList().map { mapper.appDTOtoDomainApp(it) }
-    override suspend fun getShowcaseApps() = appListApi.loadShowcaseApps().map { mapper.appDTOtoDomainApp(it) }
+    override suspend fun getShowcaseApps(appId: Int) = appListApi.loadShowcaseApps(appId).map { mapper.appDTOtoDomainApp(it) }
     override suspend fun getAppById(appId: Int) = mapper.appDTOtoDomainApp(appListApi.loadAppById(appId))
 
 
