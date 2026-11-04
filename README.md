@@ -1,3 +1,3 @@
 # Учебное приложение VK Education 2026 — Основы Android разработки
 ## Текущее состояние приложения:
-<img width="1200" height="849" alt="RuStore" src="https://github.com/user-attachments/assets/217fbb47-2d50-4980-86d1-c376ade58d2e" />
+<img width="2237" height="1575" alt="RuStore" src="https://github.com/user-attachments/assets/4bdfb531-cfeb-41c3-86b7-062a197e8810" />
