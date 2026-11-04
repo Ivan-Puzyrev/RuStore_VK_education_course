@@ -25,13 +25,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListToolBar
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.ErrorMessage
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUIText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AppListScreen(
     modifier: Modifier = Modifier,
-    onCardTap: (Int) -> Unit,
+    onCardTap: (String) -> Unit,
     onBackTap: () -> Unit
 ) {
 
@@ -60,9 +61,9 @@ fun AppListScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(16.dp)
                 ) {
-                    items(items = state.apps, key = { it.iconUrl }) {
+                    items(items = state.appDetails, key = { it.iconUrl }) {
                         AppCard(
-                            app = it,
+                            appInfo = it,
                             onCardTap = onCardTap,
                             onLogoTap = {
                                 viewModel.clickLogo()
@@ -77,8 +78,8 @@ fun AppListScreen(
                 }
             }
 
-            AppListState.Error -> {
-                ErrorMessage {
+            is AppListState.NetWorkError -> {
+                ErrorMessage(message = state.error.toUIText()) {
                     viewModel.loadApps()
                 }
             }

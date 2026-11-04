@@ -3,6 +3,7 @@ package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppRepository
+import com.ivanpuzyrev.rustorevkeducationcourse.domain.Result
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,7 +17,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = AppDetailsViewModel.Factory::class)
-class AppDetailsViewModel @AssistedInject constructor(@Assisted appId: Int, val appRepository: AppRepository) : ViewModel() {
+class AppDetailsViewModel @AssistedInject constructor(
+    @Assisted appId: String,
+    val appRepository: AppRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow<AppDetailsState>(AppDetailsState.Loading)
     val state = _state.asStateFlow()
@@ -28,15 +32,20 @@ class AppDetailsViewModel @AssistedInject constructor(@Assisted appId: Int, val 
         loadApp(appId)
     }
 
-    fun loadApp(appId: Int) {
+    fun loadApp(appId: String) {
         viewModelScope.launch {
             _state.update { AppDetailsState.Loading }
-            try {
-                val appDef = async { appRepository.getAppById(appId) }
-                val showCaseAppsDef = async { appRepository.getShowcaseApps(appId) }
-                _state.update { AppDetailsState.Content(appDef.await(), showCaseAppsDef.await()) }
-            } catch (_: Exception) {
-                _state.update { AppDetailsState.Error }
+            val appResultDef = async { appRepository.getAppById(appId) }
+            val showCaseAppsResultDef = async { appRepository.getShowcaseApps(appId) }
+
+            val appResult = appResultDef.await()
+            val showCaseAppsResult = showCaseAppsResultDef.await()
+
+            when {
+                appResult is Result.Success && showCaseAppsResult is Result.Success ->
+                    _state.update { AppDetailsState.Content(appResult.data, showCaseAppsResult.data) }
+                appResult is Result.Failure -> _state.update { AppDetailsState.NetworkError(appResult.error) }
+                showCaseAppsResult is Result.Failure -> _state.update { AppDetailsState.NetworkError((showCaseAppsResult.error)) }
             }
         }
     }
@@ -47,6 +56,6 @@ class AppDetailsViewModel @AssistedInject constructor(@Assisted appId: Int, val 
 
     @AssistedFactory
     interface Factory {
-        fun create(@Assisted appId: Int): AppDetailsViewModel
+        fun create(@Assisted appId: String): AppDetailsViewModel
     }
 }

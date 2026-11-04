@@ -1,10 +1,12 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,19 +18,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.R
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.Category
+import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppDetails
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
 
 @Composable
 fun Screenshots(modifier: Modifier = Modifier, screenshotsUrls: List<String>) {
 
-    val pagerState = rememberPagerState { screenshotsUrls.size / NUMBER_OF_SCREENSHOTS_ON_PAGE }
-    val screenshotsPages by remember { mutableStateOf(screenshotsUrls.chunked(NUMBER_OF_SCREENSHOTS_ON_PAGE)) }
+    val numberOfScreenshotsOnPage = if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) 4 else 2
+    val pagerState = rememberPagerState { screenshotsUrls.size / numberOfScreenshotsOnPage }
+    val screenshotsPages by remember { mutableStateOf(screenshotsUrls.chunked(numberOfScreenshotsOnPage)) }
 
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(
@@ -36,46 +39,40 @@ fun Screenshots(modifier: Modifier = Modifier, screenshotsUrls: List<String>) {
             style = MaterialTheme.typography.headlineMedium
         )
         HorizontalPager(pagerState) { pageNumber ->
-            val (firstScreenshot, secondScreenshot) = screenshotsPages[pageNumber]
+            val screenshots = screenshotsPages[pageNumber]
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
+                modifier = Modifier.fillMaxWidth().padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                AppListImage(
-                    modifier = Modifier
-                        .height(300.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    firstScreenshot,
-                    null
-                )
-                AppListImage(
-                    modifier = Modifier
-                        .height(300.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    secondScreenshot,
-                    null
-                )
+                screenshots.forEach { screenshot ->
+                    AppListImage(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp)),
+                        screenshot,
+                        null
+                    )
+                }
             }
         }
     }
 }
 
-private const val NUMBER_OF_SCREENSHOTS_ON_PAGE = 2
-
 @Preview(showBackground = true)
 @Composable
 private fun ScreenshotsPreview() {
-    val app = App(
-        id = 1,
+    val appDetails = AppDetails(
+        id = "1",
         iconUrl = "https://static.rustore.ru/imgproxy/-fb8TfFrlYjwu7wYCEPuKsm4wWkTLBTx_0_a9GpeKfc/preset:web_app_icon_160/plain/https://static.rustore.ru/apk/2027823295/content/ICON/97486018-5785-424d-9cab-4fe496d27c76.png@webp",
         title = "VK Видео: кино, сериалы, ТВ, мультфильмы и клипы",
-        category = Category.ENTERTAINMENT,
+        category = "Развлечение",
         description = """Смотри кино, мультики, сериалы, ТВ онлайн, спортивные трансляции, короткие видео и фильмы бесплатно на всех устройствах: от смартфона до телевизора. Премьеры и блокбастеры из кинотеатров и онлайн-платформ на твоем девайсе!
 
 Откройте интертеймент без границ с VK Видео: онлайн-просмотр ТВ, новинки кино и сериалов, познавательные и развлекательные видео, мультики для детей (без интернета), эксклюзивный контент, спортивные трансляции и смешные клипы ждут тебя. Ты можешь скачать видео для офлайн просмотра в один клик.""",
         developer = "VK",
-        ageLimit = 12,
-        size = 96,
+        ageRating = 12,
+        size = 96.0,
         screenshotsUrls = listOf(
             "https://static.rustore.ru/imgproxy/ZCsMXpX_Bp3gIRjnrtPm15UZtsDaEoPlM_o17_9sCvo/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/4/15/39/apk/2027823295/content/SCREENSHOT/0cff6242-3ca9-4591-b6e7-42fbd31b4b2c.jpg@webp",
             "https://static.rustore.ru/imgproxy/cGHqGrlUXmRaql71aP4Dluu9cC5ftyFai2jy7bHJUQo/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/4/15/5e/apk/2027823295/content/SCREENSHOT/508b971e-1220-4592-ae1f-a3f31f03dfd7.png@webp",
@@ -85,5 +82,5 @@ private fun ScreenshotsPreview() {
             "https://static.rustore.ru/imgproxy/s07-iEDuleCwnodV98yOZ1Nu-Hr1GgLGl_TVRtQkPzk/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/4/15/f7/apk/2027823295/content/SCREENSHOT/576f9603-1e46-42c8-9846-1b46e740d5a2.png@webp"
         )
     )
-    Screenshots(screenshotsUrls = app.screenshotsUrls)
+    Screenshots(screenshotsUrls = appDetails.screenshotsUrls)
 }

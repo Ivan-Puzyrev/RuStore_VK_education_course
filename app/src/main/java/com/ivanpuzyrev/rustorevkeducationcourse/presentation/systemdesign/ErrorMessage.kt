@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,14 +16,14 @@ import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 
 @Composable
-fun ErrorMessage(modifier: Modifier = Modifier, onRetry: () -> Unit) {
+fun ErrorMessage(modifier: Modifier = Modifier, message: String, onRetry: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = stringResource(R.string.something_went_wrong),
+                text = message,
                 style = MaterialTheme.typography.bodyMedium
             )
             Button(onClick = onRetry) {
@@ -37,5 +36,5 @@ fun ErrorMessage(modifier: Modifier = Modifier, onRetry: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewErrorMessage() {
-    ErrorMessage { }
+    ErrorMessage(message = stringResource(R.string.something_went_wrong)) { }
 }

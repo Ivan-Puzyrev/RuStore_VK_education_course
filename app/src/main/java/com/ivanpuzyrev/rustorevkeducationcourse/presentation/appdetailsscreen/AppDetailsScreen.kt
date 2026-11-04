@@ -40,16 +40,16 @@ import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListToolBar
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.ErrorMessage
-import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUiString
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUIText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AppDetailsScreen(
     modifier: Modifier = Modifier,
-    appId: Int,
+    appId: String,
     onBackTap: () -> Unit,
-    onAppTap: (Int) -> Unit
+    onAppTap: (String) -> Unit
 ) {
 
     val viewModel = hiltViewModel<AppDetailsViewModel, AppDetailsViewModel.Factory>(
@@ -102,32 +102,32 @@ fun AppDetailsScreen(
                                 .size(125.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .clickable { viewModel.clickLogo() },
-                            model = state.app.iconUrl,
-                            contentDescription = state.app.title
+                            model = state.appDetails.iconUrl,
+                            contentDescription = state.appDetails.title
                         )
                         Column(
                             modifier = Modifier.fillMaxWidth(),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(
-                                text = state.app.category.toUiString(),
+                                text = state.appDetails.category,
                                 style = MaterialTheme.typography.labelMedium
                             )
                             Text(
-                                text = state.app.title,
+                                text = state.appDetails.title,
                                 style = MaterialTheme.typography.headlineLarge
                             )
                             Text(
-                                text = state.app.developer,
+                                text = state.appDetails.developer,
                                 style = MaterialTheme.typography.bodySmall
                             )
                             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                                 AppSpec(
-                                    spec = "${state.app.ageLimit}+",
+                                    spec = "${state.appDetails.ageRating}+",
                                     specTitle = stringResource(R.string.age)
                                 )
                                 AppSpec(
-                                    spec = "${state.app.size} ${stringResource(R.string.mb)}",
+                                    spec = "${state.appDetails.size} ${stringResource(R.string.mb)}",
                                     specTitle = stringResource(R.string.size)
                                 )
                             }
@@ -146,21 +146,21 @@ fun AppDetailsScreen(
                     }
 
                     Screenshots(
-                        screenshotsUrls = state.app.screenshotsUrls
+                        screenshotsUrls = state.appDetails.screenshotsUrls
                     )
 
                     AppDescription(
-                        description = state.app.description
+                        description = state.appDetails.description
                     )
 
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
 
-                    Developer(developer = state.app.developer)
+                    Developer(developer = state.appDetails.developer)
 
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
 
                     Showcase(
-                        appList = state.showCaseApps,
+                        appInfoList = state.showCaseAppDetails,
                         onAppTap = onAppTap,
                         onLogoTap = {
                             viewModel.clickLogo()
@@ -175,8 +175,8 @@ fun AppDetailsScreen(
                 }
             }
 
-            AppDetailsState.Error -> {
-                    ErrorMessage {
+            is AppDetailsState.NetworkError -> {
+                    ErrorMessage(message = state.error.toUIText()) {
                         viewModel.loadApp(appId)
                     }
             }
@@ -213,7 +213,7 @@ private fun ObserveEvents(
 @Composable
 private fun AppDetailsScreenPreview() {
     AppDetailsScreen(
-        appId = 1,
+        appId = "fa2e31b8-1234-4cf7-9914-108a170a1b01",
         onBackTap = {},
         onAppTap = {}
     )

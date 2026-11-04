@@ -1,33 +1,30 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.App
+import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppDetails
+import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppInfo
 import javax.inject.Inject
 import javax.inject.Singleton
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.Category as DomainCategory
 
 @Singleton
 class Mapper @Inject constructor() {
 
-    fun appDTOtoDomainApp(appDTO: AppDTO): App = App(
-        id = appDTO.id,
-        title = appDTO.title,
-        iconUrl = appDTO.iconUrl,
-        category = appDTO.category.toDomainCategory(),
-        developer = appDTO.developer,
-        ageLimit = appDTO.ageLimit,
-        size = appDTO.size,
-        screenshotsUrls = appDTO.screenshotsUrls,
-        description = appDTO.description
+    fun appDetailsDTOtoAppDetails(appDetailsDTO: AppDetailsDTO): AppDetails = AppDetails(
+        id = appDetailsDTO.id,
+        title = appDetailsDTO.name,
+        iconUrl = appDetailsDTO.iconUrl,
+        category = appDetailsDTO.category,
+        developer = appDetailsDTO.developer,
+        ageRating = appDetailsDTO.ageRating,
+        size = appDetailsDTO.size,
+        screenshotsUrls = appDetailsDTO.screenshotUrlList,
+        description = appDetailsDTO.description
     )
 
-    private fun Category.toDomainCategory(): DomainCategory = when (this) {
-        Category.ENTERTAINMENT -> DomainCategory.ENTERTAINMENT
-        Category.COMMUNICATION -> DomainCategory.COMMUNICATION
-        Category.SERVICES -> DomainCategory.SERVICES
-        Category.FINANCE -> DomainCategory.FINANCE
-        Category.SHOPPING -> DomainCategory.SHOPPING
-        Category.GOVERNMENT -> DomainCategory.GOVERNMENT
-        Category.MAPS -> DomainCategory.MAPS
-    }
-
+    fun appInfoDTOtoAppInfo(appInfoDTO: AppInfoDTO): AppInfo = AppInfo(
+        id = appInfoDTO.id,
+        title = appInfoDTO.name,
+        iconUrl = appInfoDTO.iconUrl,
+        category = appInfoDTO.category,
+        description = appInfoDTO.description
+    )
 }
