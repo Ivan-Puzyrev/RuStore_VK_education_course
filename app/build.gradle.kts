@@ -23,9 +23,17 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix = ".debug"
             optimization {
                 enable = false
+            }
+        }
+        release {
+            applicationIdSuffix = ".release"
+            signingConfig = signingConfigs.getByName("debug")
+            optimization {
+                enable = true
             }
         }
     }

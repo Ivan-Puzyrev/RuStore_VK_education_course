@@ -11,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,12 +22,14 @@ import com.ivanpuzyrev.rustorevkeducationcourse.R
 @Composable
 fun AppListToolBar(
     modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior,
     action: (@Composable () -> Unit)? = null,
     onBackTap: () -> Unit
 ) {
+
     TopAppBar(
         modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = MaterialTheme.colorScheme.primary),
+        colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = MaterialTheme.colorScheme.primary, scrolledContainerColor = MaterialTheme.colorScheme.primary),
         title = { },
         navigationIcon = {
                 IconButton(onClick = onBackTap) {
@@ -42,6 +45,7 @@ fun AppListToolBar(
             Box(Modifier.padding(end = 16.dp)) {
                 action?.invoke()
             }
-        }
+        },
+        scrollBehavior = scrollBehavior
     )
 }
