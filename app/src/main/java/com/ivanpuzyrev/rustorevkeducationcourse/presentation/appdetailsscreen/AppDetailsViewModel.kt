@@ -32,8 +32,26 @@ class AppDetailsViewModel @AssistedInject constructor(
     private val _events = Channel<AppDetailsEvents>()
     val events = _events.receiveAsFlow()
 
+    private var installJob: Job? = null
+
     init {
         loadApp(appId)
+    }
+
+    fun onInstallClick() {
+        if (_state.value !is AppDetailsState.Content) return
+        when ((_state.value as AppDetailsState.Content).installState) {
+            InstallState.Installed -> _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.NotInstalled ) }
+            is InstallState.Installing -> {
+                installJob?.cancel()
+                _state.update { (it as AppDetailsState.Content).copy(installState = InstallState.NotInstalled) }
+            }
+            InstallState.NotInstalled -> {
+                installJob = viewModelScope.launch {
+                    emulateInstall()
+                }
+            }
+        }
     }
 
     fun loadApp(appId: String) {
@@ -71,6 +89,21 @@ class AppDetailsViewModel @AssistedInject constructor(
 
     fun clickLogo() {
         _events.trySend(AppDetailsEvents.LogoClicked)
+    }
+
+    private suspend fun emulateInstall() {
+        var progress = 0
+        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(progress)) }
+        delay(200.milliseconds)
+        progress = (30..60).random()
+        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(progress)) }
+        delay(2.seconds)
+        progress = (75..90).random()
+        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(progress)) }
+        delay(2.seconds)
+        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(99)) }
+        delay(2.seconds)
+        _state.update { (it as AppDetailsState.Content).copy(installState = InstallState.Installed) }
     }
 
     @AssistedFactory
