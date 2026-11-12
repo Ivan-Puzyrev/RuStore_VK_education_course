@@ -49,8 +49,7 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                     navController.navigate(AppListDestination.AppScreen(it)) {
                         popUpTo(AppListDestination.AppList)
                     }
-                },
-                onInstallButtonTap = {})
+                })
         }
     }
 }

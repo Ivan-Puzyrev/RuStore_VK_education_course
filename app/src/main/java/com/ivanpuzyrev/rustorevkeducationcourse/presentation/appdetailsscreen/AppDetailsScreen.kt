@@ -66,8 +66,7 @@ fun AppDetailsScreen(
     modifier: Modifier = Modifier,
     appId: String,
     onBackTap: () -> Unit,
-    onAppTap: (String) -> Unit,
-    onInstallButtonTap: () -> Unit
+    onAppTap: (String) -> Unit
 ) {
 
     val viewModel = hiltViewModel<AppDetailsViewModel, AppDetailsViewModel.Factory>(
@@ -193,7 +192,7 @@ fun AppDetailsScreen(
                         OutlinedButton(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(8.dp),
-                            onClick = onInstallButtonTap
+                            onClick = {}
                         ) {
                             Text(
                                 modifier = Modifier.padding(4.dp),
@@ -205,7 +204,7 @@ fun AppDetailsScreen(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(8.dp),
                             enabled = state.installState is InstallState.NotInstalled,
-                            onClick = onInstallButtonTap
+                            onClick = {}
                         ) {
                             Text(
                                 modifier = Modifier.padding(4.dp),
@@ -289,7 +288,6 @@ private fun AppDetailsScreenPreview() {
     AppDetailsScreen(
         appId = "fa2e31b8-1234-4cf7-9914-108a170a1b01",
         onBackTap = {},
-        onAppTap = {},
-        onInstallButtonTap = {}
+        onAppTap = {}
     )
 }
