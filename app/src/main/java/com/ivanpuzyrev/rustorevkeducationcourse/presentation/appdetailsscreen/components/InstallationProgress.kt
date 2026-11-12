@@ -36,6 +36,7 @@ fun InstallationProgress(modifier: Modifier = Modifier, progress: Int) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
+            trackColor = MaterialTheme.colorScheme.onPrimary,
             progress = { animatedProgress.value }
         )
         Text(
