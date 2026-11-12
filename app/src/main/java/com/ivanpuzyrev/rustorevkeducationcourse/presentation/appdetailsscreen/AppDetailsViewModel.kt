@@ -47,9 +47,24 @@ class AppDetailsViewModel @AssistedInject constructor(
 
             when {
                 appResult is Result.Success && showCaseAppsResult is Result.Success ->
-                    _state.update { AppDetailsState.Content(appResult.data, showCaseAppsResult.data) }
-                appResult is Result.Failure -> _state.update { AppDetailsState.NetworkError(appResult.error) }
-                showCaseAppsResult is Result.Failure -> _state.update { AppDetailsState.NetworkError((showCaseAppsResult.error)) }
+                    _state.update {
+                        AppDetailsState.Content(
+                            appResult.data,
+                            showCaseAppsResult.data
+                        )
+                    }
+
+                appResult is Result.Failure -> _state.update {
+                    AppDetailsState.NetworkError(
+                        appResult.error
+                    )
+                }
+
+                showCaseAppsResult is Result.Failure -> _state.update {
+                    AppDetailsState.NetworkError(
+                        (showCaseAppsResult.error)
+                    )
+                }
             }
         }
     }

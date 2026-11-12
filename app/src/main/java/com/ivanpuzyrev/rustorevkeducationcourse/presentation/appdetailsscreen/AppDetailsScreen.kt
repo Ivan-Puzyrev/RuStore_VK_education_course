@@ -52,6 +52,7 @@ import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.AppDescription
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.AppSpec
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.Developer
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.InstallationProgress
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.Screenshots
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.Showcase
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
@@ -130,32 +131,8 @@ fun AppDetailsScreen(
                                 model = state.appDetails.iconUrl,
                                 contentDescription = state.appDetails.title
                             )
-
                             if (state.installState is InstallState.Installing) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(Color.Black.copy(alpha = 0.3f)),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    val progress =
-                                        animateFloatAsState(
-                                            targetValue = state.installState.progress / 100f,
-                                            animationSpec = tween(1500)
-                                        )
-                                    CircularWavyProgressIndicator(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(16.dp),
-                                        progress = { progress.value }
-                                    )
-                                    Text(
-                                        text = "${(progress.value * 100).toInt()}%",
-                                        color = MaterialTheme.colorScheme.onPrimary,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                }
+                                InstallationProgress(progress = state.installState.progress)
                             }
                         }
 
@@ -192,7 +169,7 @@ fun AppDetailsScreen(
                         OutlinedButton(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(8.dp),
-                            onClick = {}
+                            onClick = {  }
                         ) {
                             Text(
                                 modifier = Modifier.padding(4.dp),
@@ -203,16 +180,14 @@ fun AppDetailsScreen(
                         Button(
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(8.dp),
-                            enabled = state.installState is InstallState.NotInstalled,
-                            onClick = {}
+                            onClick = {  }
                         ) {
                             Text(
                                 modifier = Modifier.padding(4.dp),
-                                text = if (state.installState is InstallState.NotInstalled) stringResource(
-                                    R.string.install
-                                ) else stringResource(
-                                    R.string.installed
-                                )
+                                text = when (state.installState) {
+                                    InstallState.Installed -> stringResource(R.string.delete)
+                                    InstallState.NotInstalled -> stringResource(R.string.install)
+                                }
                             )
                         }
                     }
@@ -243,7 +218,7 @@ fun AppDetailsScreen(
 
             AppDetailsState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+                    CircularWavyProgressIndicator()
                 }
             }
 

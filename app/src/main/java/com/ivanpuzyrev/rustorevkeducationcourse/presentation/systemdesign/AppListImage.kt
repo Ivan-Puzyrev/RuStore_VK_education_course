@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +21,7 @@ fun AppListImage(modifier: Modifier, model: String, contentDescription: String?)
         contentDescription = contentDescription,
         loading = {
             Box(contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(modifier = Modifier.size(32.dp))
+                CircularWavyProgressIndicator(modifier = Modifier.size(32.dp))
             }
         },
         error = {

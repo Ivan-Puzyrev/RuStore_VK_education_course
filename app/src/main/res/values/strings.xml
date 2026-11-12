@@ -31,5 +31,5 @@
     <string name="server_error">Ошибка сервера</string>
     <string name="not_found">Приложение не найдено</string>
     <string name="cancel_installation">Отменить установку</string>
-    <string name="installed">Установлено</string>
+    <string name="delete">Удалить</string>
 </resources>
