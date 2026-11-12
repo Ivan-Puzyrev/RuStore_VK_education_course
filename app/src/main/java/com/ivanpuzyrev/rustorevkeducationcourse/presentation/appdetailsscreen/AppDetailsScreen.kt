@@ -1,6 +1,8 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
 
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,11 +21,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -36,13 +39,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ivanpuzyrev.rustorevkeducationcourse.R
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.AppDescription
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.AppSpec
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.Developer
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.Screenshots
+import com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components.Showcase
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListImage
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.AppListToolBar
 import com.ivanpuzyrev.rustorevkeducationcourse.presentation.systemdesign.ErrorMessage
@@ -50,13 +61,13 @@ import com.ivanpuzyrev.rustorevkeducationcourse.presentation.utils.toUIText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppDetailsScreen(
     modifier: Modifier = Modifier,
     appId: String,
     onBackTap: () -> Unit,
-    onAppTap: (String) -> Unit
+    onAppTap: (String) -> Unit,
+    onInstallButtonTap: () -> Unit
 ) {
 
     val viewModel = hiltViewModel<AppDetailsViewModel, AppDetailsViewModel.Factory>(
@@ -71,12 +82,14 @@ fun AppDetailsScreen(
     ObserveEvents(viewModel.events, snackbarHostState)
 
     Scaffold(
-        modifier = modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             AppListToolBar(
                 action = {
                     IconButton(
-                                onClick = { }
+                        onClick = { }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Share,
@@ -108,14 +121,45 @@ fun AppDetailsScreen(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        AppListImage(
+                        Box(
                             modifier = Modifier
                                 .size(125.dp)
                                 .clip(RoundedCornerShape(16.dp))
-                                .clickable { viewModel.clickLogo() },
-                            model = state.appDetails.iconUrl,
-                            contentDescription = state.appDetails.title
-                        )
+                        ) {
+                            AppListImage(
+                                modifier = Modifier.fillMaxSize(),
+                                model = state.appDetails.iconUrl,
+                                contentDescription = state.appDetails.title
+                            )
+
+                            if (state.installState is InstallState.Installing) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(Color.Black.copy(alpha = 0.3f)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    val progress =
+                                        animateFloatAsState(
+                                            targetValue = state.installState.progress / 100f,
+                                            animationSpec = tween(1500)
+                                        )
+                                    CircularWavyProgressIndicator(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(16.dp),
+                                        progress = { progress.value }
+                                    )
+                                    Text(
+                                        text = "${(progress.value * 100).toInt()}%",
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+
                         Column(
                             modifier = Modifier.fillMaxWidth(),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -145,15 +189,33 @@ fun AppDetailsScreen(
                         }
                     }
 
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(8.dp),
-                        onClick = { }
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(4.dp),
-                            text = stringResource(R.string.install)
-                        )
+                    if (state.installState is InstallState.Installing) {
+                        OutlinedButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(8.dp),
+                            onClick = onInstallButtonTap
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(4.dp),
+                                text = stringResource(R.string.cancel_installation)
+                            )
+                        }
+                    } else {
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(8.dp),
+                            enabled = state.installState is InstallState.NotInstalled,
+                            onClick = onInstallButtonTap
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(4.dp),
+                                text = if (state.installState is InstallState.NotInstalled) stringResource(
+                                    R.string.install
+                                ) else stringResource(
+                                    R.string.installed
+                                )
+                            )
+                        }
                     }
 
                     Screenshots(
@@ -187,10 +249,11 @@ fun AppDetailsScreen(
             }
 
             is AppDetailsState.NetworkError -> {
-                    ErrorMessage(message = state.error.toUIText()) {
-                        viewModel.loadApp(appId)
-                    }
+                ErrorMessage(message = state.error.toUIText()) {
+                    viewModel.loadApp(appId)
+                }
             }
+
             AppDetailsState.Initial -> {}
         }
 
@@ -226,6 +289,7 @@ private fun AppDetailsScreenPreview() {
     AppDetailsScreen(
         appId = "fa2e31b8-1234-4cf7-9914-108a170a1b01",
         onBackTap = {},
-        onAppTap = {}
+        onAppTap = {},
+        onInstallButtonTap = {}
     )
 }

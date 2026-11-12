@@ -1,58 +1,47 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppDetails
 
 @Composable
-fun AppDescription(modifier: Modifier = Modifier, description: String) {
-
-    var isCollapsed by rememberSaveable { mutableStateOf(true) }
-    var hasOverFlow by rememberSaveable { mutableStateOf(false) }
-
-    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(
-            text = stringResource(R.string.app_description),
-            style = MaterialTheme.typography.headlineSmall
-        )
-        Text(
-            text = description,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = if (isCollapsed) 1 else Int.MAX_VALUE,
-            overflow = TextOverflow.Ellipsis,
-            onTextLayout = { hasOverFlow = it.hasVisualOverflow }
-        )
-        if (hasOverFlow || !isCollapsed) {
+fun Developer(modifier: Modifier = Modifier, developer: String, onDeveloperTap: (String) -> Unit = {}) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onDeveloperTap(developer) },
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(text = developer, style = MaterialTheme.typography.bodyMedium)
             Text(
-                modifier = Modifier.clickable {
-                    isCollapsed = !isCollapsed
-                },
-                text = if (isCollapsed) stringResource(R.string.read_more) else stringResource(R.string.collapse),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.primary
+                text = stringResource(R.string.developer),
+                style = MaterialTheme.typography.bodyMedium
             )
         }
+        Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun AppDescriptionPreview() {
+private fun DeveloperPreview() {
     val appDetails = AppDetails(
         id = "1",
         iconUrl = "https://static.rustore.ru/imgproxy/-fb8TfFrlYjwu7wYCEPuKsm4wWkTLBTx_0_a9GpeKfc/preset:web_app_icon_160/plain/https://static.rustore.ru/apk/2027823295/content/ICON/97486018-5785-424d-9cab-4fe496d27c76.png@webp",
@@ -73,5 +62,8 @@ private fun AppDescriptionPreview() {
             "https://static.rustore.ru/imgproxy/s07-iEDuleCwnodV98yOZ1Nu-Hr1GgLGl_TVRtQkPzk/preset:web_scr_prt_384/plain/https://static.rustore.ru/2026/4/15/f7/apk/2027823295/content/SCREENSHOT/576f9603-1e46-42c8-9846-1b46e740d5a2.png@webp"
         )
     )
-    AppDescription(description = appDetails.description)
+    Developer(
+        developer = appDetails.developer,
+        onDeveloperTap = {}
+    )
 }

@@ -48,6 +48,7 @@ android {
 
 dependencies {
     implementation(platform(libs.okhttp.bom))
+    implementation(libs.androidx.material3)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.retrofit)

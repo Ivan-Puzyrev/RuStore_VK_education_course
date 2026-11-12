@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen
+package com.ivanpuzyrev.rustorevkeducationcourse.presentation.appdetailsscreen.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

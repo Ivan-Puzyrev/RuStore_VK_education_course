@@ -30,4 +30,6 @@
     <string name="no_internet">Проверьте Интернет-соединение</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="not_found">Приложение не найдено</string>
+    <string name="cancel_installation">Отменить установку</string>
+    <string name="installed">Установлено</string>
 </resources>
