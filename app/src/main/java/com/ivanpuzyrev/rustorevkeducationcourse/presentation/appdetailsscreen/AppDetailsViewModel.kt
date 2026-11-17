@@ -39,16 +39,26 @@ class AppDetailsViewModel @AssistedInject constructor(
     }
 
     fun onInstallClick() {
-        if (_state.value !is AppDetailsState.Content) return
-        when ((_state.value as AppDetailsState.Content).installState) {
-            InstallState.Installed -> _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.NotInstalled ) }
+        val currentState = _state.value
+        if (currentState !is AppDetailsState.Content) return
+
+        when (currentState.installState) {
+            InstallState.Installed -> _state.update { currentState.copy( installState = InstallState.NotInstalled ) }
+
             is InstallState.Installing -> {
                 installJob?.cancel()
-                _state.update { (it as AppDetailsState.Content).copy(installState = InstallState.NotInstalled) }
+                _state.update { currentState.copy(installState = InstallState.NotInstalled) }
             }
+
             InstallState.NotInstalled -> {
                 installJob = viewModelScope.launch {
-                    emulateInstall()
+                    appRepository.installApp().collect { progress ->
+                        if (progress != 100) {
+                            _state.update { currentState.copy(installState = InstallState.Installing(progress)) }
+                        } else {
+                            _state.update { currentState.copy(installState = InstallState.Installed) }
+                        }
+                    }
                 }
             }
         }
@@ -91,20 +101,6 @@ class AppDetailsViewModel @AssistedInject constructor(
         _events.trySend(AppDetailsEvents.LogoClicked)
     }
 
-    private suspend fun emulateInstall() {
-        var progress = 0
-        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(progress)) }
-        delay(200.milliseconds)
-        progress = (30..60).random()
-        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(progress)) }
-        delay(2.seconds)
-        progress = (75..90).random()
-        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(progress)) }
-        delay(2.seconds)
-        _state.update { (it as AppDetailsState.Content).copy( installState = InstallState.Installing(99)) }
-        delay(2.seconds)
-        _state.update { (it as AppDetailsState.Content).copy(installState = InstallState.Installed) }
-    }
 
     @AssistedFactory
     interface Factory {
