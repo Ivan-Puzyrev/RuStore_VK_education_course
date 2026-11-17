@@ -1,5 +1,6 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
+import androidx.annotation.VisibleForTesting
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppDetails
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppInfo
 import javax.inject.Inject
@@ -20,6 +21,7 @@ class Mapper @Inject constructor() {
         description = appDetailsDTO.description
     )
 
+    @VisibleForTesting
     fun appInfoDTOtoAppInfo(appInfoDTO: AppInfoDTO): AppInfo = AppInfo(
         id = appInfoDTO.id,
         title = appInfoDTO.name,
@@ -27,4 +29,6 @@ class Mapper @Inject constructor() {
         category = appInfoDTO.category,
         description = appInfoDTO.description
     )
+
+    fun appInfoDTOListToAppInfoList(list: List<AppInfoDTO>): List<AppInfo> = list.map { appInfoDTOtoAppInfo(it) }
 }

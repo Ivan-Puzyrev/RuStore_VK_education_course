@@ -47,6 +47,9 @@ android {
 }
 
 dependencies {
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.androidx.material3)
     implementation(libs.okhttp)
@@ -77,4 +80,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    testImplementation(kotlin("test"))
 }

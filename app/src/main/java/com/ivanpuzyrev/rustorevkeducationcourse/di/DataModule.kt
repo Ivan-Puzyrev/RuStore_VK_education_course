@@ -2,6 +2,7 @@ package com.ivanpuzyrev.rustorevkeducationcourse.di
 
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppListApi
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepositoryImpl
+import com.ivanpuzyrev.rustorevkeducationcourse.data.Mapper
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppRepository
 import dagger.Binds
 import dagger.Module

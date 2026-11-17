@@ -19,8 +19,8 @@ class AppRepositoryImpl @Inject constructor (
     private val mapper: Mapper
 ): AppRepository {
 
-    override suspend fun getAppList() = safeCall { appListApi.loadAppList().shuffled().map { mapper.appInfoDTOtoAppInfo(it) } }
-    override suspend fun getShowcaseApps(appId: String) = safeCall { appListApi.loadAppList().filter { it.id != appId }.shuffled().take(12).map { mapper.appInfoDTOtoAppInfo(it) } }
+    override suspend fun getAppList() = safeCall { mapper.appInfoDTOListToAppInfoList(appListApi.loadAppList()) }
+    override suspend fun getShowcaseApps(appId: String) = safeCall { mapper.appInfoDTOListToAppInfoList(appListApi.loadAppList().filter { it.id != appId }.shuffled().take(12)) }
     override suspend fun getAppById(appId: String) = safeCall { mapper.appDetailsDTOtoAppDetails(appListApi.loadAppDetailsById(appId)) }
     override suspend fun installApp(): Flow<Int> = flow {
         emit(0)
