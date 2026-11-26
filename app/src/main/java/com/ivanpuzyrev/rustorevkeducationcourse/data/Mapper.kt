@@ -63,7 +63,4 @@ class Mapper @Inject constructor() {
         category = appInfoEntity.category,
         description = appInfoEntity.description
     )
-
-    fun appInfoDTOListToAppInfoEntityList(list: List<AppInfoDTO>): List<AppInfoEntity> =
-        list.map { appInfoDTOtoAppInfoEntity(it) }
 }

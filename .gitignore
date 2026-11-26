@@ -8,3 +8,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/schemas/com.ivanpuzyrev.rustorevkeducationcourse.data.db.AppDatabase/1.json
