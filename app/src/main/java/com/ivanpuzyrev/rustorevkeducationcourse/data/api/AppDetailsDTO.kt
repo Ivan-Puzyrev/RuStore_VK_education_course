@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.data
+package com.ivanpuzyrev.rustorevkeducationcourse.data.api
 
 import com.google.gson.annotations.SerializedName
 

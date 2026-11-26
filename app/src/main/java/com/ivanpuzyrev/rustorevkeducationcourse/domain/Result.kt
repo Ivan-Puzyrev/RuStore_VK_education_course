@@ -17,4 +17,5 @@ sealed interface DataError : Error {
         SERVER_ERROR,
         UNKNOWN
     }
+    data object DataBase: DataError
 }

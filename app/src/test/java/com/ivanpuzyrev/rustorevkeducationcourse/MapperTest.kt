@@ -1,7 +1,7 @@
 package com.ivanpuzyrev.rustorevkeducationcourse
 
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppDetailsDTO
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppInfoDTO
+import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppDetailsDTO
+import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppInfoDTO
 import com.ivanpuzyrev.rustorevkeducationcourse.data.Mapper
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

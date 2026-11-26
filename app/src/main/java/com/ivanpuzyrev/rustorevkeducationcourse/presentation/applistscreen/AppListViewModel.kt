@@ -1,6 +1,5 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.presentation.applistscreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppRepository
@@ -30,10 +29,10 @@ class AppListViewModel @Inject constructor(val appRepository: AppRepository) : V
     fun loadApps() {
         viewModelScope.launch {
             _state.update { AppListState.Loading }
-            val appsResult = appRepository.getAppList()
+            val appsResult = appRepository.getApps()
             _state.update {
                 when (appsResult) {
-                    is Result.Failure -> AppListState.NetWorkError((appsResult.error))
+                    is Result.Failure -> AppListState.Error((appsResult.error))
                     is Result.Success -> AppListState.Content(appsResult.data)
                 }
 

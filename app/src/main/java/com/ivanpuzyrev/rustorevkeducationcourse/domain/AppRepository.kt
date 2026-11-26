@@ -3,10 +3,8 @@ package com.ivanpuzyrev.rustorevkeducationcourse.domain
 import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
-
-    suspend fun getAppList(): Result<List<AppInfo>, DataError.Network>
-    suspend fun getShowcaseApps(appId: String): Result<List<AppInfo>, DataError.Network>
-    suspend fun getAppById(appId: String): Result<AppDetails, DataError.Network>
+    suspend fun getApps(): Result<List<AppInfo>, DataError>
+    suspend fun getShowcaseApps(appId: String): Result<List<AppInfo>, DataError>
+    suspend fun getAppDetailsById(appId: String): Result<Flow<AppDetails>, DataError>
     suspend fun installApp(): Flow<Int>
-
 }

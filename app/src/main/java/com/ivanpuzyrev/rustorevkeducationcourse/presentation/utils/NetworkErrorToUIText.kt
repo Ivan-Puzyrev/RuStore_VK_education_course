@@ -6,7 +6,7 @@ import com.ivanpuzyrev.rustorevkeducationcourse.R
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.DataError
 
 @Composable
-fun DataError.Network.toUIText(): String = when (this) {
+fun DataError.toUIText(): String = when (this) {
     DataError.Network.REQUEST_TIMEOUT -> stringResource(R.string.request_timeout)
     DataError.Network.UNAUTHORIZED -> stringResource(R.string.unauthorized)
     DataError.Network.TOO_MANY_REQUESTS -> stringResource(R.string.too_many_requests)
@@ -14,4 +14,5 @@ fun DataError.Network.toUIText(): String = when (this) {
     DataError.Network.SERVER_ERROR -> stringResource(R.string.server_error)
     DataError.Network.UNKNOWN -> stringResource(R.string.something_went_wrong)
     DataError.Network.NOT_FOUND -> stringResource(R.string.not_found)
+    DataError.DataBase -> stringResource(R.string.database_error)
 }

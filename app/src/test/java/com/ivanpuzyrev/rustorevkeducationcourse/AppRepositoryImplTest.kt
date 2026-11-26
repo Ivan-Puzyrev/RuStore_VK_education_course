@@ -1,8 +1,8 @@
 package com.ivanpuzyrev.rustorevkeducationcourse
 
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppDetailsDTO
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppInfoDTO
-import com.ivanpuzyrev.rustorevkeducationcourse.data.AppListApi
+import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppDetailsDTO
+import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppInfoDTO
+import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppListApi
 import com.ivanpuzyrev.rustorevkeducationcourse.data.AppRepositoryImpl
 import com.ivanpuzyrev.rustorevkeducationcourse.data.Mapper
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppInfo
@@ -28,7 +28,7 @@ class AppRepositoryImplTest {
     fun `get app list EXPECT a one call of loadAppList`() = runTest {
         val mockedAppDTOList = createAppListDTO()
         whenever(appListApi.loadAppList()).thenReturn(mockedAppDTOList)
-        repository.getAppList()
+        repository.downloadAppList()
         verify(appListApi).loadAppList()
     }
 
@@ -37,7 +37,7 @@ class AppRepositoryImplTest {
         val mockedAppDTOList = createAppListDTO()
         whenever(appListApi.loadAppList()).thenReturn(mockedAppDTOList)
         val appList =
-            repository.getAppList() as? Result.Success<List<AppInfo>> ?: Result.Success(emptyList())
+            repository.downloadAppList() as? Result.Success<List<AppInfo>> ?: Result.Success(emptyList())
         assertEquals(3, appList.data.size)
     }
 
@@ -51,7 +51,7 @@ class AppRepositoryImplTest {
     fun `get app by id EXPECT an app with the same id`() = runTest {
         val mockedAppDetailsDTO = createAppDetailsDTO()
         whenever(appListApi.loadAppDetailsById("first")).thenReturn(mockedAppDetailsDTO)
-        val appDetails = repository.getAppById("first") as Result.Success
+        val appDetails = repository.getAppDetailsById("first") as Result.Success
         assertEquals("first", appDetails.data.id)
     }
 
@@ -59,7 +59,7 @@ class AppRepositoryImplTest {
     fun `get app by id EXPECT a one call of loadAppDetailsById`() = runTest {
         val mockedAppDetailsDTO = createAppDetailsDTO()
         whenever(appListApi.loadAppDetailsById("first")).thenReturn(mockedAppDetailsDTO)
-        repository.getAppById("first")
+        repository.getAppDetailsById("first")
         verify(appListApi).loadAppDetailsById("first")
     }
 

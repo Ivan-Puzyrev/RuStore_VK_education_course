@@ -11,14 +11,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel(assistedFactory = AppDetailsViewModel.Factory::class)
 class AppDetailsViewModel @AssistedInject constructor(
@@ -43,7 +41,7 @@ class AppDetailsViewModel @AssistedInject constructor(
         if (currentState !is AppDetailsState.Content) return
 
         when (currentState.installState) {
-            InstallState.Installed -> _state.update { currentState.copy( installState = InstallState.NotInstalled ) }
+            InstallState.Installed -> _state.update { currentState.copy(installState = InstallState.NotInstalled) }
 
             is InstallState.Installing -> {
                 installJob?.cancel()
@@ -54,7 +52,13 @@ class AppDetailsViewModel @AssistedInject constructor(
                 installJob = viewModelScope.launch {
                     appRepository.installApp().collect { progress ->
                         if (progress != 100) {
-                            _state.update { currentState.copy(installState = InstallState.Installing(progress)) }
+                            _state.update {
+                                currentState.copy(
+                                    installState = InstallState.Installing(
+                                        progress
+                                    )
+                                )
+                            }
                         } else {
                             _state.update { currentState.copy(installState = InstallState.Installed) }
                         }
@@ -67,7 +71,7 @@ class AppDetailsViewModel @AssistedInject constructor(
     fun loadApp(appId: String) {
         viewModelScope.launch {
             _state.update { AppDetailsState.Loading }
-            val appResultDef = async { appRepository.getAppById(appId) }
+            val appResultDef = async { appRepository.getAppDetailsById(appId) }
             val showCaseAppsResultDef = async { appRepository.getShowcaseApps(appId) }
 
             val appResult = appResultDef.await()
@@ -75,11 +79,13 @@ class AppDetailsViewModel @AssistedInject constructor(
 
             when {
                 appResult is Result.Success && showCaseAppsResult is Result.Success ->
-                    _state.update {
-                        AppDetailsState.Content(
-                            appResult.data,
-                            showCaseAppsResult.data
-                        )
+                    appResult.data.collect { appDetails ->
+                        _state.update {
+                            AppDetailsState.Content(
+                                appDetails,
+                                showCaseAppsResult.data
+                            )
+                        }
                     }
 
                 appResult is Result.Failure -> _state.update {

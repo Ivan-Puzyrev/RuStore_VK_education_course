@@ -1,4 +1,4 @@
-package com.ivanpuzyrev.rustorevkeducationcourse.data
+package com.ivanpuzyrev.rustorevkeducationcourse.data.api
 
 import retrofit2.http.GET
 import retrofit2.http.Path
