@@ -15,6 +15,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularWavyProgressIndicator
@@ -80,15 +82,29 @@ fun AppDetailsScreen(
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             AppListToolBar(
-                action = {
-                    IconButton(
-                        onClick = { }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = stringResource(R.string.share_button),
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
+                actions = {
+                    val state = state
+                    if (state is AppDetailsState.Content) {
+                        Row {
+                            IconButton(
+                                onClick = { viewModel.toggleWishlistStatus() }
+                            ) {
+                                Icon(
+                                    imageVector = if (state.appDetails.isInWishlist) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                    contentDescription = stringResource(R.string.share_button),
+                                    tint = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                            IconButton(
+                                onClick = { }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Share,
+                                    contentDescription = stringResource(R.string.share_button),
+                                    tint = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                        }
                     }
                 },
                 scrollBehavior = scrollBehavior,

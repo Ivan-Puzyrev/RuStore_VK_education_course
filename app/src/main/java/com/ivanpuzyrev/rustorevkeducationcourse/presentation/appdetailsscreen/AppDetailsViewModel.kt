@@ -13,14 +13,13 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = AppDetailsViewModel.Factory::class)
 class AppDetailsViewModel @AssistedInject constructor(
-    @Assisted appId: String,
+    @Assisted val appId: String,
     val appRepository: AppRepository
 ) : ViewModel() {
 
@@ -34,6 +33,12 @@ class AppDetailsViewModel @AssistedInject constructor(
 
     init {
         loadApp(appId)
+    }
+
+    fun toggleWishlistStatus() {
+        viewModelScope.launch {
+            appRepository.toggleWishlistStatus(appId)
+        }
     }
 
     fun onInstallClick() {

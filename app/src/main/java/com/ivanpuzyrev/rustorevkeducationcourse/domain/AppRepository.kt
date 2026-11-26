@@ -7,4 +7,5 @@ interface AppRepository {
     suspend fun getShowcaseApps(appId: String): Result<List<AppInfo>, DataError>
     suspend fun getAppDetailsById(appId: String): Result<Flow<AppDetails>, DataError>
     suspend fun installApp(): Flow<Int>
+    suspend fun toggleWishlistStatus(id: String)
 }

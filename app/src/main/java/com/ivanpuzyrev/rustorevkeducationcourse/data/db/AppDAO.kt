@@ -3,7 +3,6 @@ package com.ivanpuzyrev.rustorevkeducationcourse.data.db
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.ivanpuzyrev.rustorevkeducationcourse.domain.AppInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,4 +20,6 @@ interface AppDAO {
     @Query("SELECT * FROM app_details_entities WHERE id = :id")
     fun getAppDetailsById(id: String): Flow<AppDetailsEntity?>
 
+    @Query("UPDATE app_details_entities SET isInWishlist = NOT isInWishlist WHERE id = :id")
+    suspend fun toggleWishlistStatus(id: String)
 }

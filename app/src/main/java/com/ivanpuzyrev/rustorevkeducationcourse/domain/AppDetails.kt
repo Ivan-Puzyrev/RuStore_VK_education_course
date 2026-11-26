@@ -9,5 +9,6 @@ data class AppDetails(
     val ageRating: Int,
     val size: Double,
     val screenshotsUrls: List<String>,
-    val description: String
+    val description: String,
+    val isInWishlist: Boolean = false
 )

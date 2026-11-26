@@ -1,6 +1,5 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
-import androidx.annotation.VisibleForTesting
 import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppDetailsDTO
 import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppInfoDTO
 import com.ivanpuzyrev.rustorevkeducationcourse.data.db.AppDetailsEntity
@@ -53,7 +52,8 @@ class Mapper @Inject constructor() {
             ageRating = appDetailsEntity.ageRating,
             size = appDetailsEntity.size,
             screenshotsUrls = appDetailsEntity.screenshotsUrls,
-            description = appDetailsEntity.description
+            description = appDetailsEntity.description,
+            isInWishlist = appDetailsEntity.isInWishlist
         )
 
     fun appInfoEntityToAppInfo(appInfoEntity: AppInfoEntity): AppInfo = AppInfo(

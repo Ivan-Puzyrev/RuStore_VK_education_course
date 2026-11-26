@@ -1,6 +1,5 @@
 package com.ivanpuzyrev.rustorevkeducationcourse.data
 
-import android.util.Log
 import com.ivanpuzyrev.rustorevkeducationcourse.data.api.AppListApi
 import com.ivanpuzyrev.rustorevkeducationcourse.data.db.AppDAO
 import com.ivanpuzyrev.rustorevkeducationcourse.data.utils.safeCall
@@ -11,12 +10,10 @@ import com.ivanpuzyrev.rustorevkeducationcourse.domain.DataError
 import com.ivanpuzyrev.rustorevkeducationcourse.domain.Result
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.milliseconds
@@ -28,6 +25,10 @@ class AppRepositoryImpl @Inject constructor(
     private val appDAO: AppDAO,
     private val mapper: Mapper
 ) : AppRepository {
+
+    override suspend fun toggleWishlistStatus(id: String) {
+        appDAO.toggleWishlistStatus(id)
+    }
 
     override suspend fun getApps(): Result<List<AppInfo>, DataError> {
         val appInfosFromDb = try {
